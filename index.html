@@ -150,8 +150,10 @@
                     <div class="party-card">
                         <div class="party-icon">📍</div>
                         <h3>장소</h3>
-                        <p class="party-venue">○○웨딩홀 2층 크리스탈홀</p>
-                        <p class="party-address">서울시 강남구 테헤란로 123번길 45</p>
+                        <p class="party-venue">호텔나루서울엠갤러리 22층</p>
+                        <p class="party-venue-sub">부아쟁 레스토랑</p>
+                        <p class="party-address">서울특별시 마포구 마포대로 8</p>
+                        <a href="https://naver.me/GvcTFv2T" target="_blank" class="map-link">📍 네이버 지도에서 보기</a>
                     </div>
                     <div class="party-card">
                         <div class="party-icon">🎁</div>
@@ -198,31 +200,45 @@
         <div class="container">
             <div class="section-content">
                 <h2 class="section-title">오시는 길</h2>
-                <div class="location-info">
-                    <div class="map-container">
-                        <div class="map-placeholder">
-                            <p>지도 영역</p>
-                            <p class="map-note">실제 지도는 Google Maps 또는 카카오맵을 연동하여 표시됩니다</p>
+                    <div class="location-info">
+                        <div class="map-container">
+                            <div class="naver-map">
+                                <iframe 
+                                    src="https://map.naver.com/v5/api/maps.js?ncpClientId=YOUR_CLIENT_ID&center=126.9547,37.5421&level=16"
+                                    width="100%" 
+                                    height="300" 
+                                    frameborder="0" 
+                                    style="border:0; border-radius: 15px;"
+                                    allowfullscreen="" 
+                                    aria-hidden="false" 
+                                    tabindex="0">
+                                </iframe>
+                                <div class="map-overlay">
+                                    <a href="https://naver.me/GvcTFv2T" target="_blank" class="map-open-btn">
+                                        🗺️ 크게 보기
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="location-details">
+                            <div class="location-card">
+                                <h3>🏢 주소</h3>
+                                <p>서울특별시 마포구 마포대로 8</p>
+                                <p>호텔나루서울엠갤러리 22층 부아쟁 레스토랑</p>
+                                <a href="https://naver.me/GvcTFv2T" target="_blank" class="location-link">📍 네이버 지도 보기</a>
+                            </div>
+                            <div class="location-card">
+                                <h3>🚗 주차 안내</h3>
+                                <p>1층 발렛주차 (무료)</p>
+                                <p>호텔 직원에게 돌잔치 참석 안내</p>
+                            </div>
+                            <div class="location-card">
+                                <h3>🚇 대중교통</h3>
+                                <p>지하철 6호선 마포역 1번 출구</p>
+                                <p>도보 2분 거리</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="location-details">
-                        <div class="location-card">
-                            <h3>🏢 주소</h3>
-                            <p>서울시 강남구 테헤란로 123번길 45</p>
-                            <p>○○웨딩홀 2층 크리스탈홀</p>
-                        </div>
-                        <div class="location-card">
-                            <h3>🚗 주차 안내</h3>
-                            <p>건물 지하 1층~3층 주차 가능</p>
-                            <p>3시간 무료 주차 (주차권 지급)</p>
-                        </div>
-                        <div class="location-card">
-                            <h3>🚇 대중교통</h3>
-                            <p>지하철 2호선 강남역 3번 출구</p>
-                            <p>도보 5분 거리</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
