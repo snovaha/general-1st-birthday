@@ -110,8 +110,16 @@ section {
     font-size: 36px;
     font-weight: 700;
     color: #d4863a;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: #e76f51;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .hero-subtitle {
