@@ -469,7 +469,10 @@ function initLightbox() {
         'assets/images/gallery/gallery-3.jpg',
         'assets/images/gallery/gallery-4.jpg',
         'assets/images/gallery/gallery-5.jpg',
-        'assets/images/gallery/gallery-6.jpg'
+        'assets/images/gallery/gallery-6.jpg',
+        'assets/images/gallery/gallery-7.jpg',
+        'assets/images/gallery/gallery-8.jpg',
+        'assets/images/gallery/gallery-9.jpg'
     ];
     
     // 전역 함수로 설정 (HTML onclick에서 호출)
