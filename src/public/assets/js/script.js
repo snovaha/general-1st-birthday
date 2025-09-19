@@ -1,5 +1,5 @@
-// 돌잔치 날짜 설정 (2025년 10월 11일 12:30)
-const partyDate = new Date('2025-10-11T12:30:00').getTime();
+// 돌잔치 날짜 설정 (2025년 10월 11일 12:00)
+const partyDate = new Date('2025-10-11T12:00:00').getTime();
 
 // DOM 요소 선택
 const daysElement = document.getElementById('days');
@@ -339,6 +339,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // 터치 경험 개선
     improveTouchExperience();
     
+    // 배경음악 초기화
+    initBackgroundMusic();
+    
+    // 라이트박스 초기화
+    initLightbox();
+    
     // 카운트다운 숫자 애니메이션 (5초 후 실행)
     setTimeout(() => {
         const countdownSection = document.getElementById('date');
@@ -383,6 +389,166 @@ function throttle(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
     };
+}
+
+// 배경음악 제어
+function initBackgroundMusic() {
+    const audio = document.getElementById('background-music');
+    const musicBtn = document.getElementById('music-toggle');
+    
+    if (!audio || !musicBtn) return;
+    
+    let isPlaying = false;
+    
+    // 음악 버튼 클릭 이벤트
+    musicBtn.addEventListener('click', function() {
+        if (isPlaying) {
+            audio.pause();
+            musicBtn.textContent = '🔇';
+            musicBtn.classList.add('muted');
+            isPlaying = false;
+        } else {
+            audio.play().catch(function(error) {
+                console.log('음악 재생 실패:', error);
+            });
+            musicBtn.textContent = '🎵';
+            musicBtn.classList.remove('muted');
+            isPlaying = true;
+        }
+    });
+    
+    // 첫 번째 사용자 상호작용 후 자동 재생 시도 (개선)
+    function tryAutoPlay() {
+        if (!isPlaying) {
+            audio.play().then(function() {
+                musicBtn.textContent = '🎵';
+                musicBtn.classList.remove('muted');
+                isPlaying = true;
+                console.log('자동 재생 성공!');
+            }).catch(function(error) {
+                console.log('자동 재생 실패 (브라우저 정책):', error);
+                // 버튼을 깜빡여서 사용자에게 알림
+                musicBtn.style.animation = 'pulse 2s infinite';
+            });
+        }
+    }
+    
+    // 페이지 로드 시 즉시 자동재생 시도
+    setTimeout(tryAutoPlay, 1000);
+    
+    // 다양한 이벤트에서 자동재생 시도
+    ['click', 'touchstart', 'keydown', 'scroll'].forEach(eventType => {
+        document.addEventListener(eventType, tryAutoPlay, { once: true });
+    });
+    
+    // 음악 로드 에러 처리
+    audio.addEventListener('error', function() {
+        console.log('음악 파일을 로드할 수 없습니다.');
+        // musicBtn.style.display = 'none'; // 버튼 숨기지 않음
+    });
+    
+    // 볼륨 설정 (30% - 부드럽게)
+    audio.volume = 0.3;
+}
+
+// 라이트박스 초기화
+function initLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxCurrent = document.getElementById('lightbox-current');
+    const lightboxTotal = document.getElementById('lightbox-total');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+    const backdrop = document.querySelector('.lightbox-backdrop');
+    
+    let currentImageIndex = 0;
+    const galleryImages = [
+        'assets/images/gallery/gallery-1.jpg',
+        'assets/images/gallery/gallery-2.jpg',
+        'assets/images/gallery/gallery-3.jpg',
+        'assets/images/gallery/gallery-4.jpg',
+        'assets/images/gallery/gallery-5.jpg',
+        'assets/images/gallery/gallery-6.jpg'
+    ];
+    
+    // 전역 함수로 설정 (HTML onclick에서 호출)
+    window.openLightbox = function(index) {
+        currentImageIndex = index;
+        showLightboxImage();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden'; // 스크롤 막기
+    };
+    
+    function showLightboxImage() {
+        lightboxImage.src = galleryImages[currentImageIndex];
+        lightboxCurrent.textContent = currentImageIndex + 1;
+        lightboxTotal.textContent = galleryImages.length;
+    }
+    
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = ''; // 스크롤 복원
+    }
+    
+    function nextImage() {
+        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+        showLightboxImage();
+    }
+    
+    function prevImage() {
+        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        showLightboxImage();
+    }
+    
+    // 이벤트 리스너
+    closeBtn.addEventListener('click', closeLightbox);
+    nextBtn.addEventListener('click', nextImage);
+    prevBtn.addEventListener('click', prevImage);
+    backdrop.addEventListener('click', closeLightbox);
+    
+    // 키보드 이벤트
+    document.addEventListener('keydown', function(e) {
+        if (!lightbox.classList.contains('active')) return;
+        
+        switch(e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                prevImage();
+                break;
+            case 'ArrowRight':
+                nextImage();
+                break;
+        }
+    });
+    
+    // 터치/스와이프 지원
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    lightbox.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    lightbox.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                nextImage(); // 왼쪽으로 스와이프 = 다음 이미지
+            } else {
+                prevImage(); // 오른쪽으로 스와이프 = 이전 이미지
+            }
+        }
+    }
 }
 
 // 리사이즈 이벤트 핸들링

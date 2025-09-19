@@ -16,16 +16,19 @@ aws s3 mb s3://$BUCKET_NAME --region $REGION 2>/dev/null || echo "버킷이 이�
 echo "🌐 정적 웹사이트 호스팅 설정 중..."
 aws s3 website s3://$BUCKET_NAME --index-document index.html --error-document index.html
 
-# 3. 파일 업로드 (HTML, CSS, JS)
-echo "📤 파일 업로드 중..."
-aws s3 cp index.html s3://$BUCKET_NAME/ --content-type "text/html"
-aws s3 cp style.css s3://$BUCKET_NAME/ --content-type "text/css"
-aws s3 cp script.js s3://$BUCKET_NAME/ --content-type "application/javascript"
+# 3. 프로젝트 루트로 이동 (스크립트가 scripts/aws/에서 실행될 때)
+cd "$(dirname "$0")/../.."
 
-# 4. images 폴더 업로드 (있는 경우)
-if [ -d "images" ]; then
-    echo "🖼️  이미지 파일 업로드 중..."
-    aws s3 sync images/ s3://$BUCKET_NAME/images/ --delete
+# 4. 파일 업로드 (HTML, CSS, JS)
+echo "📤 파일 업로드 중..."
+aws s3 cp src/public/index.html s3://$BUCKET_NAME/ --content-type "text/html"
+aws s3 cp src/public/assets/css/style.css s3://$BUCKET_NAME/assets/css/style.css --content-type "text/css"
+aws s3 cp src/public/assets/js/script.js s3://$BUCKET_NAME/assets/js/script.js --content-type "application/javascript"
+
+# 5. assets 폴더 전체 업로드
+echo "🖼️  에셋 파일 업로드 중..."
+if [ -d "src/public/assets" ]; then
+    aws s3 sync src/public/assets/ s3://$BUCKET_NAME/assets/ --delete
 fi
 
 # 5. 퍼블릭 읽기 권한 설정

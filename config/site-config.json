@@ -1,0 +1,30 @@
+{
+  "baby": {
+    "name": "한우주",
+    "birthDate": "2024-10-11",
+    "gender": "boy"
+  },
+  "parents": {
+    "father": "한흥석",
+    "mother": "안보경",
+    "contact": "010-1234-5678"
+  },
+  "party": {
+    "date": "2025-10-11",
+    "time": "12:30",
+    "venue": "호텔나루서울엠갤러리 22층",
+    "venueSub": "부아쟁 레스토랑",
+    "address": "서울특별시 마포구 마포대로 8",
+    "mapLink": "https://naver.me/GvcTFv2T"
+  },
+  "theme": {
+    "colorScheme": "blue",
+    "primaryColor": "#4a90e2",
+    "secondaryColor": "#357abd"
+  },
+  "deployment": {
+    "s3Bucket": "1st-birthday-invitation-20251011",
+    "cloudFrontId": "E2Z50QKS64PV0U",
+    "domain": "invitation.snovaha.com"
+  }
+}

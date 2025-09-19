@@ -107,8 +107,10 @@ section {
     border-radius: 50%;
     object-fit: cover;
     margin: 0 auto 30px;
-    box-shadow: 0 20px 40px rgba(74, 144, 226, 0.2);
-    border: 8px solid #fff;
+    box-shadow: 0 20px 40px rgba(74, 144, 226, 0.3);
+    border: 6px solid #fff;
+    display: block;
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
 }
 
 .hero-overlay {
@@ -285,16 +287,15 @@ section {
 
 .timeline-item {
     position: relative;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
     text-align: center;
-    padding-top: 40px;
 }
 
 .timeline-item::before {
     content: '';
     position: absolute;
     left: 50%;
-    top: 30px;
+    top: 60px;
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -308,16 +309,13 @@ section {
 .timeline-date {
     font-size: 14px;
     color: var(--primary-blue);
-    font-weight: 500;
-    margin-bottom: 20px;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--background-blue);
-    padding: 5px 15px;
-    border-radius: 15px;
-    border: 2px solid var(--primary-blue);
+    font-weight: 600;
+    margin-bottom: 15px;
+    background: var(--primary-blue);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
 }
 
 .timeline-content {
@@ -439,6 +437,44 @@ section {
     overflow: hidden;
     border-radius: 10px;
     transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-item:hover .gallery-photo {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(74, 144, 226, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.gallery-zoom {
+    font-size: 24px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-photo {
+    transition: transform 0.3s ease;
 }
 
 .gallery-item:hover {
@@ -462,66 +498,6 @@ section {
     padding: 80px 0;
 }
 
-/* Map Styles */
-.map-image {
-    position: relative;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.map-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 15px;
-    border-radius: 15px;
-}
-
-.location-info-overlay {
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-}
-
-.location-info-overlay h4 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.location-info-overlay p {
-    font-size: 12px;
-    margin-bottom: 2px;
-    opacity: 0.9;
-}
-
-.map-open-btn {
-    align-self: flex-end;
-}
-
-.map-open-btn {
-    background: var(--primary-blue);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-    transition: all 0.3s ease;
-}
-
-.map-open-btn:hover {
-    background: var(--secondary-blue);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
-}
 
 /* Link Styles */
 .map-link, .location-link {
@@ -798,9 +774,213 @@ section {
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
+/* Music Control */
+.music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.music-btn {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+}
+
+.music-btn:hover {
+    background: var(--secondary-blue);
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.5);
+}
+
+.music-btn.muted {
+    background: #999;
+    color: #fff;
+    opacity: 0.7;
+}
+
+.music-btn:active {
+    transform: scale(0.95);
+}
+
+/* 음악 버튼 깜빡임 애니메이션 */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    }
+    50% {
+        box-shadow: 0 6px 20px rgba(74, 144, 226, 0.8);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    }
+}
+
+/* 라이트박스 */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.lightbox.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    z-index: 10000;
+    animation: zoomIn 0.3s ease;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lightbox-close:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.lightbox-prev, .lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lightbox-prev {
+    left: -60px;
+}
+
+.lightbox-next {
+    right: -60px;
+}
+
+.lightbox-prev:hover, .lightbox-next:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-counter {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 라이트박스 애니메이션 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 모바일에서 더 크게 */
+@media (max-width: 768px) {
+    .music-control {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .music-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+    }
+    
+    .lightbox-prev {
+        left: 10px;
+    }
+    
+    .lightbox-next {
+        right: 10px;
+    }
+    
+    .lightbox-close {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .lightbox-counter {
+        bottom: 10px;
+    }
+}
+
 /* Print styles */
 @media print {
-    .floating-nav {
+    .floating-nav, .music-control {
         display: none;
     }
     

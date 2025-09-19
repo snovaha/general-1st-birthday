@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한우주 돌잔치 관리자</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 사이드바 -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-primary sidebar">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <h4 class="text-white">🎂 관리자</h4>
+                        <small class="text-light">한우주 돌잔치</small>
+                    </div>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="#dashboard" class="nav-link text-white active" data-tab="dashboard">
+                                <i class="fas fa-home me-2"></i>대시보드
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#basic-info" class="nav-link text-white" data-tab="basic-info">
+                                <i class="fas fa-user me-2"></i>기본 정보
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#images" class="nav-link text-white" data-tab="images">
+                                <i class="fas fa-images me-2"></i>이미지 관리
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#content" class="nav-link text-white" data-tab="content">
+                                <i class="fas fa-edit me-2"></i>내용 수정
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#deploy" class="nav-link text-white" data-tab="deploy">
+                                <i class="fas fa-rocket me-2"></i>배포 관리
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- 메인 컨텐츠 -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <!-- 대시보드 -->
+                <div id="dashboard" class="tab-content active">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">대시보드</h1>
+                        <a href="../public/" target="_blank" class="btn btn-outline-primary">
+                            <i class="fas fa-external-link-alt me-2"></i>사이트 보기
+                        </a>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <div class="card text-white bg-info">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">D-Day</h6>
+                                            <h3 id="d-day-count">-</h3>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-calendar-alt fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <div class="card text-white bg-success">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">도메인</h6>
+                                            <small>invitation.snovaha.com</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-globe fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>빠른 액션</h5>
+                                </div>
+                                <div class="card-body">
+                                    <button class="btn btn-primary me-2" onclick="quickDeploy()">
+                                        <i class="fas fa-rocket me-2"></i>빠른 배포
+                                    </button>
+                                    <button class="btn btn-outline-secondary me-2" onclick="showTab('images')">
+                                        <i class="fas fa-images me-2"></i>이미지 교체
+                                    </button>
+                                    <button class="btn btn-outline-info" onclick="showTab('content')">
+                                        <i class="fas fa-edit me-2"></i>내용 수정
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 기본 정보 -->
+                <div id="basic-info" class="tab-content">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">기본 정보</h1>
+                        <button class="btn btn-success" onclick="saveBasicInfo()">
+                            <i class="fas fa-save me-2"></i>저장
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">아기 정보</div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">이름</label>
+                                        <input type="text" class="form-control" id="babyName" value="한우주">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">생년월일</label>
+                                        <input type="date" class="form-control" id="babyBirthDate" value="2024-10-11">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">성별</label>
+                                        <select class="form-select" id="babyGender">
+                                            <option value="boy" selected>남아</option>
+                                            <option value="girl">여아</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">부모 정보</div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">아빠 이름</label>
+                                        <input type="text" class="form-control" id="fatherName" value="한흥석">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">엄마 이름</label>
+                                        <input type="text" class="form-control" id="motherName" value="안보경">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">연락처</label>
+                                        <input type="tel" class="form-control" id="contact" value="010-1234-5678">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">돌잔치 정보</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">날짜</label>
+                                                <input type="date" class="form-control" id="partyDate" value="2025-10-11">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">시간</label>
+                                                <input type="time" class="form-control" id="partyTime" value="12:30">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">장소명</label>
+                                                <input type="text" class="form-control" id="venue" value="호텔나루서울엠갤러리 22층">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">상세 장소</label>
+                                                <input type="text" class="form-control" id="venueSub" value="부아쟁 레스토랑">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">주소</label>
+                                                <input type="text" class="form-control" id="address" value="서울특별시 마포구 마포대로 8">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">지도 링크</label>
+                                                <input type="url" class="form-control" id="mapLink" value="https://naver.me/GvcTFv2T">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 이미지 관리 -->
+                <div id="images" class="tab-content">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">이미지 관리</h1>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    메인 사진 (Hero)
+                                    <span class="badge bg-success ms-2">실시간 업로드</span>
+                                </div>
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/hero.jpg" class="img-fluid rounded mb-3" style="max-height: 200px;" id="hero-preview">
+                                    <br>
+                                    <input type="file" id="hero-upload" class="form-control mb-2" accept="image/*" onchange="previewImage(this, 'hero')">
+                                    <small class="text-muted">권장: 정사각형, 500x500px 이상</small>
+                                    <br>
+                                    <small class="text-info">선택하면 즉시 S3에 업로드됩니다</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>타임라인 이미지</h5>
+                    <div class="row">
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-header">출생</div>
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/timeline/event-1.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'event-1')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-header">백일</div>
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/timeline/event-2.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'event-2')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-header">뒤집기</div>
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/timeline/event-3.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'event-3')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-header">앉기</div>
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/timeline/event-4.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'event-4')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-header">기어다니기</div>
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/timeline/event-5.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'event-5')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>갤러리 이미지</h5>
+                    <div class="row">
+                        <div class="col-md-2 mb-3" data-gallery="1">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/gallery/gallery-1.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'gallery-1')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/gallery/gallery-2.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'gallery-2')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/gallery/gallery-3.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'gallery-3')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/gallery/gallery-4.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'gallery-4')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/gallery/gallery-5.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'gallery-5')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img src="../public/assets/images/gallery/gallery-6.jpg" class="img-fluid rounded mb-2" style="max-height: 100px;">
+                                    <input type="file" class="form-control-sm" accept="image/*" onchange="previewImage(this, 'gallery-6')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 배포 관리 -->
+                <div id="deploy" class="tab-content">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">배포 관리</h1>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">배포 액션</div>
+                                <div class="card-body">
+                                    <button class="btn btn-primary btn-lg me-3" onclick="deployToS3()">
+                                        <i class="fas fa-rocket me-2"></i>S3에 배포
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="clearCache()">
+                                        <i class="fas fa-sync me-2"></i>캐시 무효화
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="card mt-3">
+                                <div class="card-header">배포 로그</div>
+                                <div class="card-body">
+                                    <div id="deploy-log" style="background: #f8f9fa; padding: 15px; border-radius: 5px; min-height: 200px; font-family: monospace;">
+                                        배포 로그가 여기에 표시됩니다...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">배포 정보</div>
+                                <div class="card-body">
+                                    <p><strong>S3 버킷:</strong><br><small>1st-birthday-invitation-20251011</small></p>
+                                    <p><strong>CloudFront ID:</strong><br><small>E2Z50QKS64PV0U</small></p>
+                                    <p><strong>도메인:</strong><br><small>invitation.snovaha.com</small></p>
+                                    <hr>
+                                    <p><strong>마지막 배포:</strong><br><small id="last-deploy">-</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>
