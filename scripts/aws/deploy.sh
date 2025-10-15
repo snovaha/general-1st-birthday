@@ -19,17 +19,9 @@ aws s3 website s3://$BUCKET_NAME --index-document index.html --error-document in
 # 3. 프로젝트 루트로 이동 (스크립트가 scripts/aws/에서 실행될 때)
 cd "$(dirname "$0")/../.."
 
-# 4. 파일 업로드 (HTML, CSS, JS)
-echo "📤 파일 업로드 중..."
-aws s3 cp src/public/index.html s3://$BUCKET_NAME/ --content-type "text/html"
-aws s3 cp src/public/assets/css/style.css s3://$BUCKET_NAME/assets/css/style.css --content-type "text/css"
-aws s3 cp src/public/assets/js/script.js s3://$BUCKET_NAME/assets/js/script.js --content-type "application/javascript"
-
-# 5. assets 폴더 전체 업로드
-echo "🖼️  에셋 파일 업로드 중..."
-if [ -d "src/public/assets" ]; then
-    aws s3 sync src/public/assets/ s3://$BUCKET_NAME/assets/ --delete
-fi
+# 4. 전체 public 동기화
+echo "📤 전체 파일 동기화 중..."
+aws s3 sync src/public/ s3://$BUCKET_NAME/ --delete --cache-control "max-age=60" --exclude ".DS_Store"
 
 # 5. 퍼블릭 읽기 권한 설정
 echo "🔓 퍼블릭 읽기 권한 설정 중..."
